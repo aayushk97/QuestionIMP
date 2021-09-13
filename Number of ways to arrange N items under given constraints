@@ -1,0 +1,29 @@
+//We solve this using DP, let dp[i] be number of ways to arrange first i colored items. 
+//Base case: 1 colored item -> 1 answer.
+//dp[i+1]: we need to put at least one item of color (i+1) at the very end, but items of color (i+1) can go anywhere in
+//the sequence. 
+//The number of ways to arrange the item of color (i+1) is combination of (k1 + k2 + ... ki + k(i+1)-1) over k(i+1)-1
+// represented as (k1 + k2 + .. ki + k(i+1)-1)C (k(i+1)-1) //One is subtracted as we need to put one item at the
+//very end
+
+
+//We first find all the iC_i values :
+int C[n+1][n+1];
+
+for(int i = 0; i <= n; i++){
+  for(int j = 0; j <= i; j++){
+    if(j == 0 || j == i) C[i][j] = 1;
+    
+    else C[i][j] = C[i-1][j-1] + C[i-1][j];
+  }
+}
+
+//Now, we fill the table dp[K] where K is number of colors.
+int count = 0;// sum of all k1 + k2 +.. ki where ki is less than index K.
+dp[0] = 1;
+for(int i = 0; i < K; i++){
+  dp[i+1] = (dp[i] * dp[count+k[i]-1][k[i]-1]);
+  count += k[i];
+}
+
+return dp[K];
