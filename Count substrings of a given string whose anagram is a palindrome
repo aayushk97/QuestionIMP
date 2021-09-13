@@ -1,0 +1,31 @@
+//For every substring we first update the count if the current char s[j] is even or odd by XORing. Then we check if the number after XORing is power of 2.
+//As if it is not power of 2 (similar to a vector with 1 in a cell and rest 0)then there are more than 1 char with count of odd so substring is not
+//anagram of palindrome.
+TC = O(n^2)
+
+void countSubstring(string s){
+    // Stores the answer
+    int res = 0;
+ 
+    // Iterate over the string
+    for (int i = 0;
+         i < s.length(); i++) {
+ 
+        int x = 0;
+ 
+        for (int j = i;
+             j < s.length(); j++) {
+ 
+            // Set the current character
+            int temp = 1 << s[j] - 'a';
+ 
+            // Parity update
+            x ^= temp;
+            if ((x & (x - 1)) == 0)
+                res++;
+        }
+    }
+ 
+    cout << res;
+}
+
