@@ -1,0 +1,36 @@
+//Method 1: Brute force to find all n-k subsets and then find the subsets having minimum max difference.
+//Method 2: Since, to create min max difference we have to remove elements from end. Iterate k windows and find the max difference between the n-k-1 elements in the window. 
+//Method 3: Using siliding window. We first store the difference between and adjacement elements and then using sliding window we find the window with maximum number
+// that is minimum.
+
+int minimumAdjDiffernce(vector<int>& nums, int n, int k){
+  vector<int> diff;
+  for(int i = 0; i < n-1; i++) diff.push_back(nums[i+1]-nums[i]);
+  
+  return findKMin(diff, n-1, n-k-1);
+}
+
+findKMin(vector<int>& diff, int n, int rnums){
+  //rnums is numbers remaining after we remove k nums i.e, here size of window
+  deque<int> q;
+  
+  for(int i = 0; i < rnums; i++){
+    while(q.size() > 0 && diff[q.back()] <= diff[i]) q.pop_back();
+    q.push_back(i);
+  }
+  
+  int minDiff = INT_MAX;
+  minDiff = diff[q.front()];
+  
+  for(int i = 1, j = rnums; j < diff.size(); j++){
+    
+    while(q.size() > 0 && diff[q.back()] <= diff[j] ) q.pop_back();
+    q.push_back(j);
+    while(q.size() > 0 && q.front() <= i) q.pop_front();
+    
+    minDiff = min(minDiff, diff[q.front()]);
+    
+  } 
+
+return minDiff;
+}
