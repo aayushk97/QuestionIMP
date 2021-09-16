@@ -1,7 +1,7 @@
 //Here, since we find modulo sum. The sum will always be less than modulo m. Now, the theory is the sum of a subarray is prefix sum of j - prefix sum of i-1;
 //But this might result in negative answer so we add m so result is positive. We find the maxSum at every index and max of all these will be the asnwer.
 //If a number at an index is 13, subtracting a number lesser than that can never lead to a greater sum. So, we find the a value greater than it which is in left of
-//it. Fetch and insert operations are done in O(log n) time.
+//it. Fetch and insert operations are done in O(log n) time. https://www.youtube.com/watch?v=u_ft5jCDZXk
 
 int maxSubarray(int arr[], int n, int m)
 {
