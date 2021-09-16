@@ -1,0 +1,36 @@
+//Here, since we find modulo sum. The sum will always be less than modulo m. Now, the theory is the sum of a subarray is prefix sum of j - prefix sum of i-1;
+//But this might result in negative answer so we add m so result is positive. We find the maxSum at every index and max of all these will be the asnwer.
+//If a number at an index is 13, subtracting a number lesser than that can never lead to a greater sum. So, we find the a value greater than it which is in left of
+//it. Fetch and insert operations are done in O(log n) time.
+
+int maxSubarray(int arr[], int n, int m)
+{
+    int x, prefix = 0, maxim = 0;
+ 
+    set<int> S;
+    S.insert(0);   
+ 
+    // Traversing the array.
+    for (int i = 0; i < n; i++)
+    {
+        // Finding prefix sum.
+        prefix = (prefix + arr[i])%m;
+ 
+        // Finding maximum of prefix sum.
+        maxim = max(maxim, prefix);
+ 
+        // Finding iterator pointing to the first
+        // element that is not less than value
+        // "prefix + 1", i.e., greater than or
+        // equal to this value.
+        auto it = S.lower_bound(prefix+1);
+ 
+        if (it != S.end())
+            maxim = max(maxim, prefix - (*it) + m );
+ 
+        // Inserting prefix in the set.
+        S.insert(prefix);
+    }
+ 
+    return maxim;
+}
