@@ -1,0 +1,38 @@
+//Sort by ascending order of the ending times of meeting. Then we can take the first meeting and take the next nearest starting one which starts after this meeting
+//ends.
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution
+{
+    public:
+    //Function to find the maximum number of meetings that can
+    //be performed in a meeting room.
+    int maxMeetings(int start[], int end[], int n)
+    {
+        // Your code here
+        
+        vector<pair<int, int>> pairs;
+        for(int i = 0;i < n; i++) pairs.push_back({start[i], end[i]});
+        
+        sort(pairs.begin(), pairs.end(), cmp);
+        
+        int st = pairs[0].first;
+        int en = pairs[0].second;
+        int count = 1;
+        for(int i = 1; i < pairs.size(); i++){
+            if(pairs[i].first > en){
+                st = pairs[i].first;
+                en = pairs[i].second;
+                count++;
+            }
+        }
+        
+        return count;
+        
+    }
+    
+    static bool cmp(pair<int, int>& a, pair<int, int>& b) {
+        return a.second < b.second;
+    }
+};
