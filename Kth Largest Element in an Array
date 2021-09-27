@@ -1,0 +1,30 @@
+//We use quicksort's partiton method to get to the element n-k which is in the sorted array to get the max kth element.
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        return partitionSort(nums, k, 0, nums.size()-1);
+            
+    }
+    
+    int partitionSort(vector<int>& nums, int k, int l, int r){
+        if(l < 0 || r >= nums.size()) return -1;
+        
+        int pivot = nums[r];
+        int i = l, j = l;
+        while( j < r ){
+            
+            if(nums[j] < pivot){
+                swap(nums[i], nums[j]);
+                i++, j++;
+            }else j++;
+            
+        }
+        
+        swap(nums[i], nums[r]);
+        int n = nums.size();
+        if(i == n - k) return nums[i];
+        else if(i > n - k) return partitionSort(nums, k, l, i-1);
+        else return partitionSort(nums, k, i+1, r);
+        
+    }
+};
