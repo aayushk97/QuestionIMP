@@ -1,0 +1,35 @@
+//DFS and fill the current cell with 2 so that we don't keep visiting the same cell again.
+//If we reached the end then store the path in your vector.
+
+class Solution{
+    public:
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here""
+        vector<string> allPaths;
+        string currPath = "";
+        //cout<<"Here"<<endl;
+        numPaths(m, 0, 0, n, currPath, allPaths);
+        sort(allPaths.begin(), allPaths.end());
+        
+        return allPaths;
+        
+    }
+    
+    void numPaths(vector<vector<int>>& m, int i, int j, int n, string currPath, vector<string>& allPaths){
+       
+        if(i < 0 || i >= n || j >= n || j < 0 || m[i][j] != 1) return ;
+        
+        if(i == n-1 && j == n-1){
+            if(m[i][j] == 1){
+                allPaths.push_back(currPath);
+                return;
+            }
+        }
+        m[i][j] = 2;
+        numPaths(m, i+1, j, n, currPath+'D', allPaths);
+        numPaths(m, i, j+1, n, currPath+'R', allPaths);
+        numPaths(m, i-1, j, n, currPath+'U', allPaths);
+        numPaths(m, i, j-1, n, currPath+'L', allPaths);
+        m[i][j] = 1;
+    }
+};
