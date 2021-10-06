@@ -1,0 +1,37 @@
+//We find the number of elements that are greater less than a elmenent, if that is numElements /2 then this is 
+//the number and we reduce the range to i to mid to find a closer element. 
+
+class Solution{   
+public:
+    int median(vector<vector<int>> &matrix, int r, int c){
+        // code here    
+        int m = matrix.size();
+        int n = matrix[0].size();
+        
+        int maxVal = INT_MIN, minVal = INT_MAX;
+        
+        for(int i = 0; i < m; i++){
+            minVal = min(minVal, matrix[i][0]);
+            maxVal = max(maxVal, matrix[i][n-1]);
+        }
+        
+        int med = (m*n+1)/2;
+        
+        while(minVal < maxVal){
+            
+            int mid = (minVal + maxVal)/2;
+            int sum = 0;
+            
+            for(int i = 0; i < m; i++){
+                sum += upper_bound(matrix[i].begin(), matrix[i].end(), mid) - matrix[i].begin();    
+            }
+            
+            if(sum >= med) maxVal = mid;
+            else minVal = mid + 1;
+            
+        }
+        
+        return minVal;
+        
+    }
+};
