@@ -1,0 +1,44 @@
+//We create a union find set with i < j to avoid duplicate edges i,j and j,i. In this we insert the root of each vertex. Now, if the parent of 2 nodes are similar
+//then these nodes belong to same componenent and this edge creates a cycle so we return true.
+
+class Solution {
+  public:
+  
+  int findParent(vector<int>& set, int i){
+      if(set[i] == -1) return i;
+      
+      findParent(set, set[i]);
+  }
+  
+  void setParent(vector<int>& set, int x, int y){
+      set[x] = y;
+  }
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        vector<int> set(V+1, -1);
+        
+        
+        
+        for(int i = 0; i < V; i++){
+            
+            for(int j = 0; j < adj[i].size(); j++){
+                if(i >= adj[i][j]) continue;
+                
+                int x = findParent(set, adj[i][j]);
+                int y = findParent(set, i);
+                //cout<<i<<" "<<adj[i][j]<<" "<<x<<" "<<y<<" "<<set[x]<<" "<<set[y]<<endl;
+                if(x == y) return true;
+                
+                setParent(set, x, y);
+                //cout<<i<<" "<<adj[i][j]<<" "<<x<<" "<<y<<" "<<set[x]<<" "<<set[y]<<endl;
+                
+            }
+            
+            
+            
+        }
+        
+        return false;
+    }
+};
