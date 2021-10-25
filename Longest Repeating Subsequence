@@ -1,7 +1,14 @@
-//We compare 2 differnet indices and if the chars are same we add 1 to our answer, we also skip i or/and j to find a better answer even if it doesn't exists.
+//We compare 2 differnet indices and if the chars are same we add 1 to our answer, else skip i or j to find a better answer even if it doesn't exists.
 //IMP: We can also use LCS with condition that s[i] == s[j] && i != j to find the answer.
 
 class Solution {
+	public:
+		int LongestRepeatingSubsequence(string str){
+		    // Code here
+		    vector<vector<int>> dp(str.length(), vector<int>(str.length(), INT_MIN));
+		    return maxLen(str, 0, 1, dp);
+		}
+		class Solution {
 	public:
 		int LongestRepeatingSubsequence(string str){
 		    // Code here
@@ -26,5 +33,8 @@ class Solution {
 		    int val3 = maxLen(str, i+1, j+1, dp);
 		    return dp[i][j] = max(val1, max(val2, max(val3, maxVal)));
 		}
+
+};
+
 
 };
